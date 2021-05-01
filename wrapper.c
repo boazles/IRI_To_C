@@ -107,7 +107,7 @@ int main(int c, char *argv[])
                 printf("%d\n",line_count);
             }
             fclose(fp);
-            int month = floor(mmdd%100); // formatting graph
+            int month = floor(mmdd/100); // formatting graph
             int day = mmdd%100;
             char date[100];
             int minutes = floor(fmodf(dhour, floor(dhour))*60);
@@ -116,7 +116,10 @@ int main(int c, char *argv[])
                 sprintf(min,"%d",  minutes);
             else
                 sprintf(min, "%d%d", 0, minutes);
-            sprintf(date, "%d %d %d %d:%s %s\n", (int)month, day ,iyyy, (int)dhour, min, "UTC" );
+            char mon[20];
+            if ((int)month== 3)
+                sprintf(mon , "March");
+            sprintf(date, "%s %d %d %d:%s", mon, day ,iyyy, (int)dhour, min );
             printf("%s\n", date);
             printf("%i, %f, %f,%i, %i, %f, %f, %f, %f\n", jmag, alati, along, iyyy,mmdd,dhour, begin, end, step);
             //iri_web_(jf, &jmag, &alati, &along, &iyyy, &mmdd , &dhour,&height , &h_tec_max,&iut, &ivar, &begin , &end, &step,  out, oarr);
@@ -143,7 +146,8 @@ int main(int c, char *argv[])
                 exit(EXIT_FAILURE);
             }
 
-        
+            float sun_spot = oarr[33]; // 12-month running mean of sunspot number from model
+
             float fact = 1.6*10E-19/sqrt(8.85*10E-12*9.1*10E-31); // change from density to frequency using the oscilator formula wp = sqrt(n*e^2/(eo*me)) using permittivity of free space
             for (int i = 0 ; i<1000 ;i++)
             {
@@ -171,7 +175,8 @@ int main(int c, char *argv[])
             char st[20]= " EDP for";
             char beg[20] = "set title \"";
             char utc[10] = "\'";
-            sprintf (title , "%s%s %s  ",beg, st, date);
+            char end[50] = "UTC with sun spot number ";
+            sprintf (title , "%s%s %s %s %d ",beg, st, date, end, (int)sun_spot);
             printf( "%s\n", title);
             char fl[50];
             char pl[20] = "plot \'";
