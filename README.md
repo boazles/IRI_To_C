@@ -12,7 +12,7 @@ Enter  the following parameters seperated by a newline
 6. time inUTC in hh.xx format
 7. Minimum altitude in KM
 8. Maximun altitude in KM
-9. Altitude step must be less then 1000
+9. Altitude step. Total number Altitude data points  must be less then 1000
 
 Currently only wraps the iri_sub function but can be easily adapted to  wrap the iri_web function as well.
 
