@@ -1,7 +1,7 @@
 # iri
-A C wrapper to the International Reference Ionosphere (IRI) ionosphere model.
+A C wrapper for the International Reference Ionosphere (IRI) 2016 model.
 
-Input is accomplished by a  configuration file called params folllowed by a number.
+Model input is accomplished using a  configuration file called params folllowed by a number.
 
 Enter  the following parameters seperated by a newline
 1. 0 or 1 depending on coordinate system geographic or geomagnetic
