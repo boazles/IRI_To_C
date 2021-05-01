@@ -13,8 +13,8 @@ int main(int c, char *argv[])
         index = atoi(argv[1]);
     else
     {
-       printf("error: missing or too many command line arguments\n");
-        return 1;
+       printf("error: missing arguement or too many command line arguments , usage: ./run 1 or ./run 2 \n");
+        return -1;
     }
     int line_count = 0;
     
