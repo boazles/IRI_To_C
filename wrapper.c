@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include<unistd.h> 
+#include <unistd.h> 
 #include <math.h>
 extern void iri_sub_(int[] , int *, float *, float *, int *, int * , float *, float *, float *, float *, float[][20], float[]);
 extern void iri_web_(int[] , int *, float *, float *, int *, int * , float *,float *, int * , int * ,int *, float *, float *, float *, float[][20], float[]);
@@ -61,50 +61,40 @@ int main(int c, char *argv[])
                 if (line_count==0) // works only for iri_sub_ can be easily adjusted for iri_web_
                 {
                     jmag== atoi(line); //=0/1,geog/geom  coordinates could use bool
-                    printf("%i\n", jmag);
                 }
                 else if (line_count==1)
                 {
                     alati= atof(line); // latitude
-                    printf("%f\n", alati);
                 }
                 else if (line_count==2)
                 {
                     along = atof(line);  // longitude
-                    printf("%f\n", along);
                 }
                 else if (line_count==3)
                 {
-                    iyyy = atoi(line);  //year
-                    printf("%i\n", iyyy);
+                    iyyy = atoi(line);  //year in yyyy format
                 }
                 else if (line_count==4)
                 {
                     mmdd = atoi(line);  // Month and  days could use day of year (Julian date)
-                    printf("%i\n", mmdd);
                 }
                 else if (line_count==5) 
                 {
                     dhour =atof(line);  // Hour at UTC
-                    printf("%f\n", dhour);
                 }
                 else if (line_count==6)
                 {
                     begin =atof(line); // start latitude KM
-                    printf("%f\n", begin);
                 }
                 else if (line_count==7)
                 {
                     end =atof(line);  // End latitude KM
-                    printf("%f\n", end);
                 }
                 else if (line_count==8)
                 {
                     step =atof(line); // Sampling step number of steps cannot exceed 1000
-                    printf("%f\n", step);
                 }
                 line_count++;
-                printf("%d\n",line_count);
             }
             fclose(fp);
             int month = floor(mmdd/100); // formatting graph
@@ -131,7 +121,6 @@ int main(int c, char *argv[])
 
             /* 
             * Open file in w (write) mode. 
-            * "data/file1.txt" is complete path to create file
             */
             char outfile[20];
             sprintf(outfile, "%s%d%s", "output", index , ".dat");
@@ -170,6 +159,7 @@ int main(int c, char *argv[])
 
             /* Success message */
             printf("File created and saved successfully. :) \n");
+            //plot via GnuPlot
             int NUM_COMMANDS = 4;
             char title[400];
             char st[20]= " EDP for";
@@ -177,12 +167,12 @@ int main(int c, char *argv[])
             char utc[10] = "\'";
             char end[50] = "UTC with sun spot number ";
             sprintf (title , "%s%s %s %s %d ",beg, st, date, end, (int)sun_spot);
-            printf( "%s\n", title);
+            //printf( "%s\n", title);
             char fl[50];
             char pl[20] = "plot \'";
             sprintf (fl , "%s%s%s"  , pl, outfile, utc);
-            printf("%s\n", title);
-            printf("%s\n", fl);
+            //printf("%s\n", title);
+            //printf("%s\n", fl);
             char * commandsForGnuplot[] = {title, "set xlabel \"Plasma Frequency (MHz)\"", "set ylabel \"Altitude (Km)\"",fl};
             FILE * gnuplotPipe = popen ("gnuplot -persistent", "w");
             for (int i=0; i < NUM_COMMANDS; i++)
