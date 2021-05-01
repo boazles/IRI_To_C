@@ -25,4 +25,6 @@ To build:
 2. type make
 
 To run:
-1. type ./run
+1. type ./run file number
+
+currently files numbers 1 and 2 are configured.
