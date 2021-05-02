@@ -107,8 +107,30 @@ int main(int c, char *argv[])
             else
                 sprintf(min, "%d%d", 0, minutes);
             char mon[20];
+            if ((int)month== 1)
+                sprintf(mon , "January");
+            if ((int)month== 2)
+                sprintf(mon , "February");
             if ((int)month== 3)
                 sprintf(mon , "March");
+            if ((int)month== 4)
+                sprintf(mon , "April");
+            if ((int)month== 5)
+                sprintf(mon , "May");
+            if ((int)month== 6)
+                sprintf(mon , "June");
+            if ((int)month== 7)
+                sprintf(mon , "July");
+            if ((int)month== 8)
+                sprintf(mon , "August");
+            if ((int)month== 9)
+                sprintf(mon , "September");
+            if ((int)month== 10)
+                sprintf(mon , "October");
+            if ((int)month== 11)
+                sprintf(mon , "November");
+            if ((int)month== 12)
+                sprintf(mon , "December");
             sprintf(date, "%s %d %d %d:%s", mon, day ,iyyy, (int)dhour, min );
             printf("%s\n", date);
             printf("%i, %f, %f,%i, %i, %f, %f, %f, %f\n", jmag, alati, along, iyyy,mmdd,dhour, begin, end, step);
