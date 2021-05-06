@@ -2,7 +2,7 @@ CC = gcc # Flag for implicit rules
 FC = gfortran
 FCFLAGS = -O3  
 # Flag for implicit rules. Turn on debug info
-CFLAGS = -O3  
+CFLAGS = -O3 -g -Wall 
 LIBS =
 INCLUDES =
 TARGET = run

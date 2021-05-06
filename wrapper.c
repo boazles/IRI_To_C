@@ -3,10 +3,11 @@
 #include <stdbool.h>
 #include <unistd.h> 
 #include <math.h>
+#define PI 3.142857
 extern void iri_sub_(int[] , int *, float *, float *, int *, int * , float *, float *, float *, float *, float[][20], float[]);
 extern void iri_web_(int[] , int *, float *, float *, int *, int * , float *,float *, int * , int * ,int *, float *, float *, float *, float[][20], float[]);
 
-int main(int c, char *argv[])
+int main(int c, char* argv[])
 {
     int index = 0;
     if (c==2)
@@ -61,6 +62,7 @@ int main(int c, char *argv[])
                 if (line_count==0) // works only for iri_sub_ can be easily adjusted for iri_web_
                 {
                     jmag== atoi(line); //=0/1,geog/geom  coordinates could use bool
+                    printf("jmag is %d\n", jmag);
                 }
                 else if (line_count==1)
                 {
@@ -137,10 +139,21 @@ int main(int c, char *argv[])
             //iri_web_(jf, &jmag, &alati, &along, &iyyy, &mmdd , &dhour,&height , &h_tec_max,&iut, &ivar, &begin , &end, &step,  out, oarr);
             iri_sub_(jf, &jmag, &alati, &along, &iyyy, &mmdd , &dhour, &begin , &end, &step,  out, oarr);
             printf("computed iri model\n");
+            FILE * dPtr;
+            char rawdata[20];
+            sprintf(rawdata, "%s", "output.dat");
+            dPtr = fopen(rawdata, "w");
+            for (int i = 0 ; i<1000 ;i++)
+            {
+                    if (out[i][0]!=-1.0)
+                    {
+                        fprintf(dPtr,"%f ",out[i][0]);
+                        fprintf(dPtr,"%f",begin+i*step);
+                        fprintf(dPtr,"\n");
+                    }
+            }
             /* File pointer to hold reference to our file */
             FILE * fPtr;
-
-
             /* 
             * Open file in w (write) mode. 
             */
@@ -157,7 +170,7 @@ int main(int c, char *argv[])
                 exit(EXIT_FAILURE);
             }
 
-            float sun_spot = oarr[33]; // 12-month running mean of sunspot number from model
+            float sun_spot = oarr[32]; // 12-month running mean of sunspot number from model
 
             float fact = 1.6*10E-19/sqrt(8.85*10E-12*9.1*10E-31); // change from density to frequency using the oscilator formula wp = sqrt(n*e^2/(eo*me)) using permittivity of free space
             for (int i = 0 ; i<1000 ;i++)
@@ -167,7 +180,7 @@ int main(int c, char *argv[])
                 {
                     if (out[i][j]!=-1.0)
                     {
-                        fprintf(fPtr,"%f ",fact*sqrt(out[i][j])/(2*M_PI*1000000));
+                        fprintf(fPtr,"%f ",fact*sqrt(out[i][j])/(2*PI*1000000));
                         fprintf(fPtr,"%f",begin+i*step);
                         fprintf(fPtr,"\n");
                     }
